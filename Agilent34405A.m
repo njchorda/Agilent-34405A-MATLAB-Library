@@ -1,6 +1,7 @@
-%Agilent34405A_visadev  Agilent/Keysight 34405A multimeter driver.
-% Port of Agilent34405A.m to the modern VISA interface (visadev/visadevlist,
-% writeline/readline). The legacy visa()/instrhwinfo('visa') interface was
+%Agilent34405A  Agilent/Keysight 34405A multimeter driver.
+% Port of the original Agilent34405A.m (in the pre-visadev branch) to use
+% the modern VISA interface (visadev/visadevlist, writeline/readline).
+% The legacy visa()/instrhwinfo('visa') interface was
 % removed in recent MATLAB releases. Method names and usage are unchanged.
 %
 % Changes vs. the original besides the transport:
@@ -8,7 +9,7 @@
 %   - State comparisons use strcmp (the original char ~= comparison errors
 %     when the two state strings have different lengths).
 %   - Constructor optionally accepts a VISA resource name.
-classdef Agilent34405A_visadev < handle
+classdef Agilent34405A < handle
     properties
        visaAddress;
        v;
@@ -19,9 +20,9 @@ classdef Agilent34405A_visadev < handle
     end
 
     methods
-        function obj = Agilent34405A_visadev(varargin)
+        function obj = Agilent34405A(varargin)
             if numel(varargin) == 0
-                obj.visaAddress = Agilent34405A_visadev.findAddress();
+                obj.visaAddress = Agilent34405A.findAddress();
             else
                 obj.visaAddress = char(varargin{1});
             end
